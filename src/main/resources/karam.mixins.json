@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "nl.dyonb.karam.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ItemPickupMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

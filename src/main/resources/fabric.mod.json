@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "karam",
+  "version": "${version}",
+
+  "name": "Karam",
+  "description": "Adds random things",
+  "authors": [
+    "dyonb"
+  ],
+  "contact": {
+    "homepage": "https://dyonb.nl/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/karam/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "nl.dyonb.karam.Karam"
+    ],
+    "client": [
+      "nl.dyonb.karam.client.KaramClient"
+    ]
+  },
+  "mixins": [
+    "karam.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

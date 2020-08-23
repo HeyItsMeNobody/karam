@@ -1,0 +1,7 @@
+{
+  "item.karam.dev_null": "/dev/null",
+  "item.karam.dev_null.tooltip_1": "Filters items out of your inventory.",
+  "item.karam.dev_null.tooltip_2": "Currently filtering: %d",
+
+  "itemGroup.karam.main": "Karam main"
+}

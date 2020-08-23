@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "result":
+  {
+    "item": "karam:dev_null",
+    "count": 1
+  }
+}
