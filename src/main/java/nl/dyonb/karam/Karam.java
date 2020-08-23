@@ -2,6 +2,7 @@ package nl.dyonb.karam;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
+import nl.dyonb.karam.registry.KaramConfig;
 import nl.dyonb.karam.registry.KaramItemGroups;
 import nl.dyonb.karam.registry.KaramItems;
 import nl.dyonb.karam.registry.KaramScreenHandlers;
@@ -24,6 +25,7 @@ public class Karam implements ModInitializer {
 
 		//LOGGER.log(Level.DEBUG, "Hello Fabric world!");
 
+		KaramConfig.initialize();
 		KaramItemGroups.initialize();
 		KaramItems.initialize();
 		KaramScreenHandlers.initialize();

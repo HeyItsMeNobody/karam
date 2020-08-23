@@ -23,6 +23,9 @@
     ],
     "client": [
       "nl.dyonb.karam.client.KaramClient"
+    ],
+    "modmenu": [
+      "nl.dyonb.karam.client.KaramModMenuIntegration"
     ]
   },
   "mixins": [

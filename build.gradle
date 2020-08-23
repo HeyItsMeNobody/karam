@@ -16,6 +16,18 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	// For configs
+	// Cloth config
+	modApi("me.shedaniel.cloth:config-2:4.7.0-unstable") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	include "me.shedaniel.cloth:config-2:4.7.0-unstable"
+	// Auto config
+	modApi("me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	include "me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"
+
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	
