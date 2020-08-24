@@ -3,7 +3,11 @@
   "item.karam.dev_null.tooltip_1": "Filters items out of your inventory.",
   "item.karam.dev_null.tooltip_2": "Currently filtering: %d",
 
+  "block.karam.elevator": "Elevator",
+
   "itemGroup.karam.main": "Karam main",
 
-  "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using dev_null"
+  "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using dev_null",
+
+  "text.autoconfig.karam.option.deactivateElevatorOnRedstonePower": "Deactivate elevator when powered"
 }

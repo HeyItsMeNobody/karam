@@ -4,7 +4,9 @@
   "package": "nl.dyonb.karam.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ItemPickupMixin"
+    "ItemPickupMixin",
+    "PlayerEntityMixin",
+    "EntityMixin"
   ],
   "client": [
   ],

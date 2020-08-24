@@ -2,10 +2,7 @@ package nl.dyonb.karam;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-import nl.dyonb.karam.registry.KaramConfig;
-import nl.dyonb.karam.registry.KaramItemGroups;
-import nl.dyonb.karam.registry.KaramItems;
-import nl.dyonb.karam.registry.KaramScreenHandlers;
+import nl.dyonb.karam.registry.*;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +25,7 @@ public class Karam implements ModInitializer {
 		KaramConfig.initialize();
 		KaramItemGroups.initialize();
 		KaramItems.initialize();
+		KaramBlocks.initialize();
 		KaramScreenHandlers.initialize();
 	}
 

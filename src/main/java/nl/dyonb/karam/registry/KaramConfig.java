@@ -12,14 +12,25 @@ import nl.dyonb.karam.Karam;
 public class KaramConfig implements ConfigData {
 
     @ConfigEntry.Gui.Excluded
-    public static KaramConfig config = new KaramConfig();
+    public static KaramConfig CONFIG = new KaramConfig();
 
+    // dev_null
     @Comment("Destroy item instead of leaving it on the ground when using the /dev/null item")
     public boolean destroyItemDevNull = false;
 
+    // elevator
+    @Comment("Maximum blocks allowed when moving between elevators")
+    public int maxBlocksBetweenElevator = 20;
+    @Comment("Maximum solid blocks allowed when moving between elevators")
+    public int maxSolidBlocksBetweenElevator = 4;
+    @Comment("Ignore if an elevator is obstructed by blocks")
+    public boolean ignoreObstructedElevator = true;
+    @Comment("Deactivate elevator when powered")
+    public boolean deactivateElevatorOnRedstonePower = true;
+
     public static void initialize() {
         AutoConfig.register(KaramConfig.class, JanksonConfigSerializer::new);
-        config = AutoConfig.getConfigHolder(KaramConfig.class).getConfig();
+        CONFIG = AutoConfig.getConfigHolder(KaramConfig.class).getConfig();
     }
 
 }

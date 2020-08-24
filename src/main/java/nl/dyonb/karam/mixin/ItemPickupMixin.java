@@ -36,7 +36,7 @@ public class ItemPickupMixin {
 				// Check if the item to filter is the same as the item being picked up
 				if (itemToFilter == item) {
 					// If destroy item is true, destroy the item.
-					if (KaramConfig.config.destroyItemDevNull == true) {
+					if (KaramConfig.CONFIG.destroyItemDevNull == true) {
 						itemStack.decrement(itemStack.getCount());
 						ci.cancel();
 					} else {
