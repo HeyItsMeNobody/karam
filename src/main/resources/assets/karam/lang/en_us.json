@@ -7,6 +7,8 @@
 
   "itemGroup.karam.main": "Karam main",
 
+  "text.autoconfig.karam.title": "Karam",
+
   "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using dev_null",
 
   "text.autoconfig.karam.option.deactivateElevatorOnRedstonePower": "Deactivate elevator when powered",
