@@ -3,7 +3,6 @@ package nl.dyonb.karam;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import nl.dyonb.karam.registry.*;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

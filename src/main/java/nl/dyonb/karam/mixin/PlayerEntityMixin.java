@@ -1,7 +1,6 @@
 package nl.dyonb.karam.mixin;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
 import nl.dyonb.karam.common.block.ElevatorBlock;

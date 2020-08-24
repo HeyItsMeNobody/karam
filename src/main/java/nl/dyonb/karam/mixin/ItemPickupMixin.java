@@ -1,24 +1,17 @@
 package nl.dyonb.karam.mixin;
 
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.item.DevNullItem;
 import nl.dyonb.karam.common.item.inventory.DevNullInventory;
 import nl.dyonb.karam.registry.KaramConfig;
-import nl.dyonb.karam.registry.KaramItems;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Set;
 
 @Mixin(ItemEntity.class)
 public class ItemPickupMixin {

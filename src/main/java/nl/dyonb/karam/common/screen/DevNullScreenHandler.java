@@ -4,17 +4,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.AirBlockItem;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.item.DevNullItem;
 import nl.dyonb.karam.registry.KaramScreenHandlers;
-import org.apache.logging.log4j.Level;
 
 // ScreenHandler classes are used to synchronize GUI state between the server and the client
 public class DevNullScreenHandler extends ScreenHandler {
