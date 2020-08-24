@@ -9,5 +9,8 @@
 
   "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using dev_null",
 
-  "text.autoconfig.karam.option.deactivateElevatorOnRedstonePower": "Deactivate elevator when powered"
+  "text.autoconfig.karam.option.deactivateElevatorOnRedstonePower": "Deactivate elevator when powered",
+  "text.autoconfig.karam.option.ignoreObstructedElevator": "Ignore elevator obstructions",
+  "text.autoconfig.karam.option.maxSolidBlocksBetweenElevator": "Max solid blocks between elevators",
+  "text.autoconfig.karam.option.maxBlocksBetweenElevator": "Max distance between elevators"
 }

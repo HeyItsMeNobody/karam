@@ -19,11 +19,11 @@ public class KaramConfig implements ConfigData {
     public boolean destroyItemDevNull = false;
 
     // elevator
-    @Comment("Maximum blocks allowed when moving between elevators")
+    @Comment("Max distance between elevators")
     public int maxBlocksBetweenElevator = 20;
-    @Comment("Maximum solid blocks allowed when moving between elevators")
+    @Comment("Max solid blocks between elevators")
     public int maxSolidBlocksBetweenElevator = 4;
-    @Comment("Ignore if an elevator is obstructed by blocks")
+    @Comment("Ignore elevator obstructions")
     public boolean ignoreObstructedElevator = true;
     @Comment("Deactivate elevator when powered")
     public boolean deactivateElevatorOnRedstonePower = true;
