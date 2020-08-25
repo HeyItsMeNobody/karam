@@ -11,54 +11,41 @@ public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClien
     private int color = 16777215;
     public int getColor() { return color; }
 
+    public void setColor(int colorToSet) {
+        color = colorToSet;
+
+        CompoundTag compoundTag = new CompoundTag();
+        compoundTag.putInt("color", color);
+
+        fromTag(this.getCachedState(), compoundTag);
+    }
+
     public ElevatorBlockEntity() {
         super(KaramBlockEntityTypes.ELEVATOR);
     }
 
-//    // Serialize the BlockEntity
-//    @Override
-//    public CompoundTag toTag(CompoundTag tag) {
-//        super.toTag(tag);
-//
-//        // Save the current value of the number to the tag
-//        // If color is 0 set it to 16777215 (white)
-//        if (color == 0) {
-//            color = 16777215;
-//        }
-//        tag.putInt("color", color);
-//
-//        return tag;
-//    }
-//
-//    // Deserialize the BlockEntity
-//    @Override
-//    public void fromTag(BlockState state, CompoundTag tag) {
-//        super.fromTag(state, tag);
-//        color = tag.getInt("color");
-//
-//        this.markDirty();
-//    }
-
     @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        color = compoundTag.getInt("color");
+    public void fromTag(BlockState state, CompoundTag tag) {
+        super.fromTag(state, tag);
+        fromClientTag(tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        // Save the current value of the number to the tag
-        // If color is 0 set it to 16777215 (white)
-        System.out.println("before check");
-        System.out.println(color);
-        if (color == 0) {
-            color = 16777215;
-        }
-        System.out.println("after check");
-        System.out.println(color);
-        compoundTag.putInt("color", color);
-        System.out.println("tag after put");
-        System.out.println(compoundTag);
+    public CompoundTag toTag(CompoundTag tag) {
+        super.toTag(tag);
+        return toClientTag(tag);
+    }
 
-        return compoundTag;
+    @Override
+    public void fromClientTag(CompoundTag tag) {
+        color = tag.getInt("color");
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        if (color == 0)
+            color = 16777215;
+        tag.putInt("color", color);
+        return tag;
     }
 }

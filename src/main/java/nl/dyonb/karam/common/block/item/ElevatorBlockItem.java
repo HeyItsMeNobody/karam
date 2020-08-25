@@ -1,5 +1,6 @@
 package nl.dyonb.karam.common.block.item;
 
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,21 +26,21 @@ public class ElevatorBlockItem extends BlockItem {
     protected boolean postPlacement(BlockPos pos, World world, PlayerEntity player, ItemStack stack, BlockState state) {
         ElevatorBlockEntity blockEntity = (ElevatorBlockEntity) world.getBlockEntity(pos);
         CompoundTag nbt = stack.getOrCreateTag();
-        if (!nbt.contains("color")) {
-            nbt.putInt("color", 16777215);
-        } else if (nbt.get("color") instanceof StringTag) {
-            // Make sure it is always an integer
-            nbt.putInt("color", Integer.parseInt(nbt.getString("color"), 16));
-        }
 
-        blockEntity.fromClientTag(nbt);
+        int color = 16777215;
+        if (nbt.contains("color", NbtType.INT)) // nbt.contains(String, int) allows you to check for a subtag of a specific type, very cool
+            color = nbt.getInt("color");
+        else if (nbt.contains("color", NbtType.STRING)) {
+            try {
+                color = Integer.parseInt(nbt.getString("color"));
+            } catch (NumberFormatException ignored) { }
+        }
+        blockEntity.setColor(color);
+
+        blockEntity.markDirty();
         if (!world.isClient()) {
             blockEntity.sync();
         }
-//        // Put back the NBT into the block
-//        blockEntity.fromTag(state, nbt);
-//        // Make sure the NBT gets saved
-//        blockEntity.markDirty();
 
         return super.postPlacement(pos, world, player, stack, state);
     }
