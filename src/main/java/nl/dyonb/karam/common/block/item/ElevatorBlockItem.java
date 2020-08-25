@@ -25,16 +25,7 @@ public class ElevatorBlockItem extends BlockItem {
     @Override
     protected boolean postPlacement(BlockPos pos, World world, PlayerEntity player, ItemStack stack, BlockState state) {
         ElevatorBlockEntity blockEntity = (ElevatorBlockEntity) world.getBlockEntity(pos);
-//        CompoundTag nbt = stack.getOrCreateTag();
-//
-//        int color = 16777215;
-//        if (nbt.contains("color", NbtType.INT)) // nbt.contains(String, int) allows you to check for a subtag of a specific type, very cool
-//            color = nbt.getInt("color");
-//        else if (nbt.contains("color", NbtType.STRING)) {
-//            try {
-//                color = Integer.parseInt(nbt.getString("color"));
-//            } catch (NumberFormatException ignored) { }
-//        }
+
         int color = ElevatorBlockEntity.getColorFromItemStack(stack);
         blockEntity.setColor(color);
 
