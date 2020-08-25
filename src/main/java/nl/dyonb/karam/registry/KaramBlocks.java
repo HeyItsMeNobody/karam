@@ -17,7 +17,7 @@ import nl.dyonb.karam.common.block.item.ElevatorBlockItem;
 public class KaramBlocks {
 
     private static ElevatorBlock elevatorBlock = new ElevatorBlock(FabricBlockSettings.of(Material.WOOL, MaterialColor.WHITE).requiresTool().breakByTool(FabricToolTags.SHEARS, 1).strength(2, 2).sounds(BlockSoundGroup.WOOL));
-    private static ElevatorBlockItem elevatorBlockItem = new ElevatorBlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
+    public static ElevatorBlockItem elevatorBlockItem = new ElevatorBlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
     public static final Block ELEVATOR = register("elevator", elevatorBlock, elevatorBlockItem);
 
     public static void initialize() {
