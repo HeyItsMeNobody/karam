@@ -12,12 +12,11 @@ public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClien
     public int getColor() { return color; }
 
     public void setColor(int colorToSet) {
-        color = colorToSet;
-
-        CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putInt("color", color);
-
-        fromTag(this.getCachedState(), compoundTag);
+        this.color = colorToSet;
+        markDirty();
+        if (!world.isClient) {
+            sync();
+        }
     }
 
     public ElevatorBlockEntity() {

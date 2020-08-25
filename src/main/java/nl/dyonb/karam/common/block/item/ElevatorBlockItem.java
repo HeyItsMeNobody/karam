@@ -37,11 +37,6 @@ public class ElevatorBlockItem extends BlockItem {
         }
         blockEntity.setColor(color);
 
-        blockEntity.markDirty();
-        if (!world.isClient()) {
-            blockEntity.sync();
-        }
-
         return super.postPlacement(pos, world, player, stack, state);
     }
 }
