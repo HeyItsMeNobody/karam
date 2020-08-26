@@ -4,8 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.options.DoubleOption;
+import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
@@ -14,6 +16,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
+import nl.dyonb.karam.common.block.entity.RgbifierBlockEntity;
 import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
 
 import java.awt.*;
@@ -32,6 +35,8 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     private AbstractButtonWidget blueSlider;
 
     RgbifierScreenHandler screenHandler;
+
+    private final Inventory rgbifierInventory;
 
     //A path to the gui texture. In this example we use the texture from the dispenser
     private static final Identifier TEXTURE = Karam.identifier("textures/gui/container/dev_null.png");
@@ -67,18 +72,23 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     });
 
     public void updateColor() {
-        this.color = 255 << 24 + this.red << 16 + this.green << 8 + this.blue;
+        // this.color = 255 << 24 + this.red << 16 + this.green << 8 + this.blue;
+
+        // TODO: Let server know the color has changed.
+        this.color = new Color(this.red, this.green, this.blue).getRGB();
     }
 
     public RgbifierScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
 
         screenHandler = (RgbifierScreenHandler) handler;
+        rgbifierInventory = screenHandler.getInventory();
 
-        this.color = screenHandler.getColor();
-        this.red = (this.color >> 16) & 0xFF;
-        this.green = (this.color >> 8) & 0xFF;
-        this.blue = (this.color >> 0) & 0xFF;
+//        this.color = screenHandler.getColor();
+//        this.red = (this.color >> 16) & 0xFF;
+//        this.green = (this.color >> 8) & 0xFF;
+//        this.blue = (this.color >> 0) & 0xFF;
+
 //        } else {
 //            slidersActive = false;
 //        }
@@ -106,10 +116,19 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     protected void init() {
         super.init();
 
-        this.color = screenHandler.getColor();
-        this.red = (this.color >> 16) & 0xFF;
-        this.green = (this.color >> 8) & 0xFF;
-        this.blue = (this.color >> 0) & 0xFF;
+        if (this.client == null)
+            return;
+
+//        this.color = screenHandler.getColor();
+//        this.red = (this.color >> 16) & 0xFF;
+//        this.green = (this.color >> 8) & 0xFF;
+//        this.blue = (this.color >> 0) & 0xFF;
+
+        this.color = ElevatorBlockEntity.getColorFromItemStack(rgbifierInventory.getStack(0));
+//        this.color = 200;
+        this.red = new Color(this.color).getRed();
+        this.green = new Color(this.color).getGreen();
+        this.blue = new Color(this.color).getBlue();
 
         // Center the title
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
@@ -124,6 +143,12 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         redSlider.active = slidersActive;
         greenSlider.active = slidersActive;
         blueSlider.active = slidersActive;
+
+        // TODO: Update the slider whenever an item is inserted into the rgbifier's inventory.
+        // To update the slider's position
+        doubleOptionRed.set(this.client.options, this.red);
+        doubleOptionGreen.set(this.client.options, this.green);
+        doubleOptionBlue.set(this.client.options, this.blue);
     }
 
 //    public int getRGB() {

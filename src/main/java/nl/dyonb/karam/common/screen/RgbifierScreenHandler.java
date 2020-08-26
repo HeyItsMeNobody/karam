@@ -101,6 +101,10 @@ public class RgbifierScreenHandler extends ScreenHandler {
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
         return ItemStack.EMPTY;
     }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 }
 
 

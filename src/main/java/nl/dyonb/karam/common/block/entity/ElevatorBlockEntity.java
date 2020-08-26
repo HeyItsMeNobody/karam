@@ -40,6 +40,11 @@ public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClien
         return color;
     }
 
+    public static void setColorForItemStack(ItemStack stack, int color) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        nbt.putInt("color", color);
+    }
+
     public ElevatorBlockEntity() {
         super(KaramBlockEntityTypes.ELEVATOR);
     }

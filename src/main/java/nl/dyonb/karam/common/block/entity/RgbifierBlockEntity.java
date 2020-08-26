@@ -80,6 +80,8 @@ public class RgbifierBlockEntity extends BlockEntity implements NamedScreenHandl
             currentColor = colorInTick;
             propertyDelegate.set(0, currentColor);
             if (!this.getWorld().isClient()) {
+                // TODO: Make sure the item stack actually sets the color when the client updates the server on the color
+                ElevatorBlockEntity.setColorForItemStack(inventory.get(0), currentColor);
                 sync();
             }
             System.out.println(currentColor);
