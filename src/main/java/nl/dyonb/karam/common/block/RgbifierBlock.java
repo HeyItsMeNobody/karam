@@ -42,12 +42,11 @@ public class RgbifierBlock extends Block implements BlockEntityProvider {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            //This will call the createScreenHandlerFactory method from blockWithEntity, which will return our blockEntity casted
-            //to a namedScreenHandlerFactory
+            // This will call the createScreenHandlerFactory method from blockWithEntity, which will return our blockEntity casted to a namedScreenHandlerFactory
             NamedScreenHandlerFactory screenHandlerFactory = createScreenHandlerFactory(state, world, pos);
 
             if (screenHandlerFactory != null) {
-                //With this call the server will request the client to open the appropriate Screenhandler
+                // With this call the server will request the client to open the appropriate Screenhandler
                 player.openHandledScreen(screenHandlerFactory);
             }
         }

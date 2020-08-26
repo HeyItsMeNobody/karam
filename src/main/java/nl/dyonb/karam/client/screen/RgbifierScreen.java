@@ -25,8 +25,6 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
 
     RgbifierScreenHandler screenHandler;
 
-    private final Inventory rgbifierInventory;
-
     //A path to the gui texture. In this example we use the texture from the dispenser
     private static final Identifier TEXTURE = Karam.identifier("textures/gui/container/dev_null.png");
     private final DoubleOption doubleOptionRed = new DoubleOption("karam.menu.red", 1.0F, 255.0F, 1F, (gameOptions) -> {
@@ -66,14 +64,15 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         this.color = new Color(this.red, this.green, this.blue).getRGB();
 
         // Updates PropertyDelegate From Client Side
-        screenHandler.setColor(this.color);
+        // screenHandler.setColor(this.color);
+        // TODO: Send client to server packet here
     }
 
     public RgbifierScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
 
-        screenHandler = (RgbifierScreenHandler) handler;
-        rgbifierInventory = screenHandler.getInventory();
+        this.screenHandler = (RgbifierScreenHandler) handler;
+        // Inventory rgbifierInventory = screenHandler.getInventory();
     }
 
     // Draws the background
@@ -107,11 +106,6 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         if (this.client == null)
             return;
 
-        this.color = screenHandler.getColor();
-        this.red = new Color(this.color).getRed();
-        this.green = new Color(this.color).getGreen();
-        this.blue = new Color(this.color).getBlue();
-
         // Center the title
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 
@@ -127,8 +121,21 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         greenSlider.active = slidersActive;
         blueSlider.active = slidersActive;
 
-        // TODO: Update the slider whenever an item is inserted into the rgbifier's inventory.
-        // To update the slider's position
+        // this.updateSliders(some-color-here); - Should this be here?
+    }
+
+    public void updateSliders(int color) {
+        // TODO: Have server tell client to run this method with the color.
+        // Your best bet is to get rid of propertyDelegate and create a packet from server to client to send the updated color over.
+
+        if (this.client == null)
+            return;
+
+        this.color = color;
+        this.red = new Color(this.color).getRed();
+        this.green = new Color(this.color).getGreen();
+        this.blue = new Color(this.color).getBlue();
+
         doubleOptionRed.set(this.client.options, this.red);
         doubleOptionGreen.set(this.client.options, this.green);
         doubleOptionBlue.set(this.client.options, this.blue);
