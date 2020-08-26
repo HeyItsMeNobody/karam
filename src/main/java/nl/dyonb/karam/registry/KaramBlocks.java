@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.block.ElevatorBlock;
+import nl.dyonb.karam.common.block.RgbifierBlock;
 import nl.dyonb.karam.common.block.item.ElevatorBlockItem;
 
 public class KaramBlocks {
@@ -19,6 +20,8 @@ public class KaramBlocks {
     private static ElevatorBlock elevatorBlock = new ElevatorBlock();
     public static ElevatorBlockItem elevatorBlockItem = new ElevatorBlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
     public static final Block ELEVATOR = register("elevator", elevatorBlock, elevatorBlockItem);
+
+    public static final Block RGBIFIER = register("rgbifier", new RgbifierBlock(), KaramItems.getBasicItemSettings());
 
     public static void initialize() {
         // Not used here
