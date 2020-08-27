@@ -13,16 +13,19 @@ import nl.dyonb.karam.registry.KaramBlockEntityTypes;
 
 public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
     private int color = 16777215;
+
     public int getColor() { return color; }
 
     public void setColor(int colorToSet) {
         this.color = colorToSet;
         markDirty();
-        if (!world.isClient) {
+
+        if (this.world != null && !this.world.isClient) {
             sync();
         }
     }
 
+    // TODO: Move this to a helper class
     public static int getColorFromItemStack(ItemStack stack) {
         CompoundTag nbt = stack.getOrCreateTag();
 
@@ -38,6 +41,12 @@ public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClien
         }
 
         return color;
+    }
+
+    // TODO: Move this to a helper class
+    public static void setColorForItemStack(ItemStack stack, int color) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        nbt.putInt("color", color);
     }
 
     public ElevatorBlockEntity() {
