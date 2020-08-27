@@ -1,6 +1,10 @@
 package nl.dyonb.karam.common.block.entity;
 
+import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,9 +12,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
@@ -18,31 +24,14 @@ import net.minecraft.util.collection.DefaultedList;
 import nl.dyonb.karam.common.ImplementedInventory;
 import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
 import nl.dyonb.karam.registry.KaramBlockEntityTypes;
+import nl.dyonb.karam.util.PacketReference;
 
-public class RgbifierBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, BlockEntityClientSerializable, Tickable {
+import java.util.UUID;
+
+public class RgbifierBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, BlockEntityClientSerializable {
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
-
-    // PropertyDelegate is an interface which we will implement inline here.
-    // It can normally contain multiple integers as data identified by the index, but in this example we only have one.
-    private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
-        private int currentColor;
-
-        @Override
-        public int get(int index) {
-            return this.currentColor;
-        }
-
-        @Override
-        public void set(int index, int value) {
-            this.currentColor = value;
-        }
-
-        // this is supposed to return the amount of integers you have in your delegate, in our example only one
-        @Override
-        public int size() {
-            return 1;
-        }
-    };
+    private int currentColor;
+    private UUID playerUUID;
 
     public RgbifierBlockEntity() {
         super(KaramBlockEntityTypes.RGBIFIER);
@@ -59,9 +48,10 @@ public class RgbifierBlockEntity extends BlockEntity implements NamedScreenHandl
     // getDisplayName will Provide its name which is normally shown at the top
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        playerUUID = player.getUuid();
         // We provide *this* to the screenHandler as our class Implements Inventory
         // Only the Server has the Inventory at the start, this will be synced to the client in the ScreenHandler
-        return new RgbifierScreenHandler(syncId, playerInventory, this, propertyDelegate);
+        return new RgbifierScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
@@ -69,41 +59,38 @@ public class RgbifierBlockEntity extends BlockEntity implements NamedScreenHandl
         return new TranslatableText(getCachedState().getBlock().getTranslationKey());
     }
 
-    @Override
-    public void tick() {
-        // Note: You really don't need to tick this, but the code isn't computationally expensive, so it doesn't matter.
-        // If you do want to get rid of ticking, just handle this when the server receives a packet from the client to change the color.
-        if (this.getWorld() == null)
-            return;
-
-        ItemStack itemStack = inventory.get(0);
-        int colorInTick = ElevatorBlockEntity.getColorFromItemStack(itemStack);
-
-        // Handles Setting the ItemStack Color From PropertyDelegate
-        if (colorInTick != getColor()) {
-            // TODO: Create a client to server packet to update propertyDelegate so this works properly: https://discordapp.com/channels/507304429255393322/507982478276034570/748285835836915812
-            ElevatorBlockEntity.setColorForItemStack(inventory.get(0), getColor());
-            sync();
-
-            // Only runs on the server.
-            System.out.println("Client: " + this.getWorld().isClient() + " - Color: " + getColor());
-        }
-    }
-
     public int getColor() {
-        return this.propertyDelegate.get(0);
+        return currentColor;
     }
 
     public void setColor(int color) {
-        this.propertyDelegate.set(0, color);
+        currentColor = color;
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        // Sets propertyDelegate to current color of ItemStack
         ImplementedInventory.super.setStack(slot, stack);
 
-        this.setColor(ElevatorBlockEntity.getColorFromItemStack(stack));
+        currentColor = ElevatorBlockEntity.getColorFromItemStack(stack);
+
+        sendColorDataToClient(currentColor);
+    }
+
+    @Override
+    public void onClose(PlayerEntity player) {
+        this.inventory.get(0);
+    }
+
+    public void sendColorDataToClient(int color) {
+        if (!this.getWorld().isClient()) {
+            PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+            passedData.writeInt(color);
+            PlayerStream.watching(this).forEach(playerEntity -> {
+                if (playerUUID == playerEntity.getUuid()) {
+                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(playerEntity, PacketReference.RGBIFIER_COLOR_TO_CLIENT, passedData);
+                }
+            });
+        }
     }
 
     @Override
@@ -130,5 +117,12 @@ public class RgbifierBlockEntity extends BlockEntity implements NamedScreenHandl
         Inventories.toTag(tag, this.inventory);
 
         return tag;
+    }
+
+    // This is used for sending initial color data to the Screen
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
+        // Write the current items color
+        packetByteBuf.writeInt(ElevatorBlockEntity.getColorFromItemStack(this.inventory.get(0)));
     }
 }

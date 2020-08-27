@@ -26,6 +26,7 @@ public class Karam implements ModInitializer {
 		KaramItems.initialize();
 		KaramBlockEntityTypes.initialize();
 		KaramBlocks.initialize();
+		KaramServerPackets.initialize();
 		KaramScreenHandlers.initialize();
 	}
 

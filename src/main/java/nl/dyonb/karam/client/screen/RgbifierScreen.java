@@ -1,23 +1,28 @@
 package nl.dyonb.karam.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.options.DoubleOption;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
+import nl.dyonb.karam.util.PacketReference;
 
 import java.awt.*;
 
 // HandledScreen classes are fully client-sided and are responsible for drawing GUI elements.
 public class RgbifierScreen extends HandledScreen<ScreenHandler> {
+    private boolean firstInitialize = true;
     private int color;
     private int red;
     private int green;
@@ -27,7 +32,7 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
 
     //A path to the gui texture. In this example we use the texture from the dispenser
     private static final Identifier TEXTURE = Karam.identifier("textures/gui/container/dev_null.png");
-    private final DoubleOption doubleOptionRed = new DoubleOption("karam.menu.red", 1.0F, 255.0F, 1F, (gameOptions) -> {
+    private final DoubleOption doubleOptionRed = new DoubleOption("karam.menu.red", 0.0F, 255.0F, 1F, (gameOptions) -> {
         // Gets the red value from the full color
         return (double) this.red;
     }, (gameOptions, double_) -> {
@@ -38,7 +43,7 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         return new TranslatableText("block.karam.rgbifier.red", this.red);
     });
 
-    private final DoubleOption doubleOptionGreen = new DoubleOption("karam.menu.green", 1.0F, 255.0F, 1F, (gameOptions) -> {
+    private final DoubleOption doubleOptionGreen = new DoubleOption("karam.menu.green", 0.0F, 255.0F, 1F, (gameOptions) -> {
         // Gets the green value from the full color
         return (double) this.green;
     }, (gameOptions, double_) -> {
@@ -49,11 +54,11 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         return new TranslatableText("block.karam.rgbifier.green", this.green);
     });
 
-    private final DoubleOption doubleOptionBlue = new DoubleOption("karam.menu.blue", 1.0F, 255.0F, 1F, (gameOptions) -> {
+    private final DoubleOption doubleOptionBlue = new DoubleOption("karam.menu.blue", 0.0F, 255.0F, 1F, (gameOptions) -> {
         // Gets the blue value from the full color
         return (double) this.blue;
     }, (gameOptions, double_) -> {
-        // Set the new blu4
+        // Set the new blue
         this.blue = double_.intValue();
         this.updateColor();
     }, (gameOptions, doubleOption) -> {
@@ -61,18 +66,19 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     });
 
     public void updateColor() {
-        this.color = new Color(this.red, this.green, this.blue).getRGB();
+        this.color = (0xFF << 24) | (red << 16) | (green << 8) | (blue);
 
-        // Updates PropertyDelegate From Client Side
-        // screenHandler.setColor(this.color);
-        // TODO: Send client to server packet here
+        // Send the packet to the server
+        PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+        passedData.writeInt(this.color);
+        passedData.writeInt(this.screenHandler.syncId);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(PacketReference.RGBIFIER_COLOR_TO_SERVER, passedData);
     }
 
     public RgbifierScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
 
         this.screenHandler = (RgbifierScreenHandler) handler;
-        // Inventory rgbifierInventory = screenHandler.getInventory();
     }
 
     // Draws the background
@@ -106,6 +112,15 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         if (this.client == null)
             return;
 
+        // Set the initial values
+        if (firstInitialize == true) {
+            RgbifierScreenHandler rgbifierScreenHandler = (RgbifierScreenHandler) this.handler;
+            this.color = rgbifierScreenHandler.getInitialColor();
+            this.red = (this.color >> 16) & 0xFF;
+            this.green = (this.color >> 8) & 0xFF;
+            this.blue = (this.color >> 0) & 0xFF;
+        }
+
         // Center the title
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 
@@ -121,24 +136,20 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         greenSlider.active = slidersActive;
         blueSlider.active = slidersActive;
 
-        // this.updateSliders(some-color-here); - Should this be here?
+        firstInitialize = false;
     }
 
     public void updateSliders(int color) {
-        // TODO: Have server tell client to run this method with the color.
-        // Your best bet is to get rid of propertyDelegate and create a packet from server to client to send the updated color over.
-
         if (this.client == null)
             return;
 
         this.color = color;
-        this.red = new Color(this.color).getRed();
-        this.green = new Color(this.color).getGreen();
-        this.blue = new Color(this.color).getBlue();
+        this.red = (this.color >> 16) & 0xFF;
+        this.green = (this.color >> 8) & 0xFF;
+        this.blue = (this.color >> 0) & 0xFF;
 
-        doubleOptionRed.set(this.client.options, this.red);
-        doubleOptionGreen.set(this.client.options, this.green);
-        doubleOptionBlue.set(this.client.options, this.blue);
+        // Reinitialize the sliders to set them
+        this.init(this.client, this.width, this.height);
     }
 }
 
