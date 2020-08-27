@@ -25,30 +25,6 @@ public class ElevatorBlockEntity extends BlockEntity implements BlockEntityClien
         }
     }
 
-    // TODO: Move this to a helper class
-    public static int getColorFromItemStack(ItemStack stack) {
-        CompoundTag nbt = stack.getOrCreateTag();
-
-        int color = 16777215;
-        if (nbt.contains("color", NbtType.INT)) { // nbt.contains(String, int) allows you to check for a subtag of a specific type, very cool
-            color = nbt.getInt("color");
-        } else if (nbt.contains("BlockEntityTag") && nbt.getCompound("BlockEntityTag").contains("color", NbtType.INT)) {
-            color = nbt.getCompound("BlockEntityTag").getInt("color");
-        } else if (nbt.contains("color", NbtType.STRING)) {
-            try {
-                color = Integer.parseInt(nbt.getString("color"));
-            } catch (NumberFormatException ignored) { }
-        }
-
-        return color;
-    }
-
-    // TODO: Move this to a helper class
-    public static void setColorForItemStack(ItemStack stack, int color) {
-        CompoundTag nbt = stack.getOrCreateTag();
-        nbt.putInt("color", color);
-    }
-
     public ElevatorBlockEntity() {
         super(KaramBlockEntityTypes.ELEVATOR);
     }

@@ -24,8 +24,10 @@ import net.minecraft.util.collection.DefaultedList;
 import nl.dyonb.karam.common.ImplementedInventory;
 import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
 import nl.dyonb.karam.registry.KaramBlockEntityTypes;
+import nl.dyonb.karam.util.ColorHelper;
 import nl.dyonb.karam.util.PacketReference;
 
+import java.awt.*;
 import java.util.UUID;
 
 public class RgbifierBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory, BlockEntityClientSerializable {
@@ -71,7 +73,7 @@ public class RgbifierBlockEntity extends BlockEntity implements ExtendedScreenHa
     public void setStack(int slot, ItemStack stack) {
         ImplementedInventory.super.setStack(slot, stack);
 
-        currentColor = ElevatorBlockEntity.getColorFromItemStack(stack);
+        currentColor = ColorHelper.getColorFromItemStack(stack);
 
         sendColorDataToClient(currentColor);
     }
@@ -123,6 +125,6 @@ public class RgbifierBlockEntity extends BlockEntity implements ExtendedScreenHa
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
         // Write the current items color
-        packetByteBuf.writeInt(ElevatorBlockEntity.getColorFromItemStack(this.inventory.get(0)));
+        packetByteBuf.writeInt(ColorHelper.getColorFromItemStack(this.inventory.get(0)));
     }
 }

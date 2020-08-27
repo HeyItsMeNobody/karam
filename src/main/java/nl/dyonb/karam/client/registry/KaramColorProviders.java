@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
 import nl.dyonb.karam.registry.KaramBlocks;
+import nl.dyonb.karam.util.ColorHelper;
 
 public class KaramColorProviders {
 
@@ -20,7 +21,7 @@ public class KaramColorProviders {
         }, KaramBlocks.ELEVATOR);
 
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
-            return ElevatorBlockEntity.getColorFromItemStack(stack);
+            return ColorHelper.getColorFromItemStack(stack);
         }, KaramBlocks.elevatorBlockItem);
     }
 

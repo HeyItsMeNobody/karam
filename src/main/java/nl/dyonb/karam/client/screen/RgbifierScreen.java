@@ -126,10 +126,11 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
 
         int sliderWidth = 100;
         int center = (width - sliderWidth) / 2;
+        int spaceBetweenSliders = 25;
 
-        AbstractButtonWidget redSlider = this.addButton(doubleOptionRed.createButton(this.client.options, center - sliderWidth, 10, sliderWidth));
+        AbstractButtonWidget redSlider = this.addButton(doubleOptionRed.createButton(this.client.options, center - sliderWidth - spaceBetweenSliders, 10, sliderWidth));
         AbstractButtonWidget greenSlider = this.addButton(doubleOptionGreen.createButton(this.client.options, center, 10, sliderWidth));
-        AbstractButtonWidget blueSlider = this.addButton(doubleOptionBlue.createButton(this.client.options, center + sliderWidth, 10, sliderWidth));
+        AbstractButtonWidget blueSlider = this.addButton(doubleOptionBlue.createButton(this.client.options, center + sliderWidth + spaceBetweenSliders, 10, sliderWidth));
 
         boolean slidersActive = true;
         redSlider.active = slidersActive;

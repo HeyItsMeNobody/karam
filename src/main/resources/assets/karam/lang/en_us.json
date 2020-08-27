@@ -16,6 +16,7 @@
   "text.autoconfig.karam.option.maxSolidBlocksBetweenElevator": "Max solid blocks between elevators",
   "text.autoconfig.karam.option.maxBlocksBetweenElevator": "Max distance between elevators",
 
+  "block.karam.rgbifier": "Rgbifier",
   "block.karam.rgbifier.red": "Red: %d",
   "block.karam.rgbifier.green": "Green: %d",
   "block.karam.rgbifier.blue": "Blue: %d"

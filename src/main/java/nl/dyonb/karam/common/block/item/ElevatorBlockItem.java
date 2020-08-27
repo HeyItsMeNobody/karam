@@ -15,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
+import nl.dyonb.karam.util.ColorHelper;
 
 public class ElevatorBlockItem extends BlockItem {
     public ElevatorBlockItem(Block block, Settings settings) {
@@ -26,7 +27,7 @@ public class ElevatorBlockItem extends BlockItem {
     protected boolean postPlacement(BlockPos pos, World world, PlayerEntity player, ItemStack stack, BlockState state) {
         ElevatorBlockEntity blockEntity = (ElevatorBlockEntity) world.getBlockEntity(pos);
 
-        int color = ElevatorBlockEntity.getColorFromItemStack(stack);
+        int color = ColorHelper.getColorFromItemStack(stack);
         blockEntity.setColor(color);
 
         return super.postPlacement(pos, world, player, stack, state);
