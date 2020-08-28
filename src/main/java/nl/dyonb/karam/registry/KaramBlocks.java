@@ -1,21 +1,22 @@
 package nl.dyonb.karam.registry;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.block.ElevatorBlock;
+import nl.dyonb.karam.common.block.RgbifierBlock;
+import nl.dyonb.karam.common.block.item.BaseColorBlockItem;
 
 public class KaramBlocks {
 
-    public static final Block ELEVATOR = register("elevator", new ElevatorBlock(FabricBlockSettings.of(Material.WOOL, MaterialColor.WHITE).requiresTool().breakByTool(FabricToolTags.SHEARS, 1).strength(2, 2).sounds(BlockSoundGroup.WOOL)), KaramItems.getBasicItemSettings());
+    private static ElevatorBlock elevatorBlock = new ElevatorBlock();
+    public static BaseColorBlockItem elevatorBlockItem = new BaseColorBlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
+    public static final Block ELEVATOR = register("elevator", elevatorBlock, elevatorBlockItem);
+
+    public static final Block RGBIFIER = register("rgbifier", new RgbifierBlock(), KaramItems.getBasicItemSettings());
 
     public static void initialize() {
         // Not used here
