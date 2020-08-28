@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "karam:block/rgbifier_top",
+    "side": "block/oak_planks",
+    "bottom": "block/oak_planks",
+    "front": "block/oak_planks"
+  }
+}
+
