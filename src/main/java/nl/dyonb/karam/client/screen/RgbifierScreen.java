@@ -3,12 +3,14 @@ package nl.dyonb.karam.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.options.DoubleOption;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -16,9 +18,9 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
+import nl.dyonb.karam.util.ColorHelper;
 import nl.dyonb.karam.util.PacketReference;
-
-import java.awt.*;
+import org.apache.logging.log4j.Level;
 
 // HandledScreen classes are fully client-sided and are responsible for drawing GUI elements.
 public class RgbifierScreen extends HandledScreen<ScreenHandler> {
@@ -28,10 +30,34 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     private int green;
     private int blue;
 
+    private int hexFieldX = 10;
+    private int hexFieldY = 50;
+    private int hexFieldWidth = 100;
+
     RgbifierScreenHandler screenHandler;
 
     //A path to the gui texture. In this example we use the texture from the dispenser
     private static final Identifier TEXTURE = Karam.identifier("textures/gui/container/dev_null.png");
+
+    TranslatableText hexTranslatableText = new TranslatableText("block.karam.rgbifier.hex");
+    TranslatableText applyHexTranslatableText = new TranslatableText("block.karam.rgbifier.apply");
+    TextFieldWidget hexTextField = new TextFieldWidget(MinecraftClient.getInstance().textRenderer, hexFieldX, hexFieldY, hexFieldWidth, 18, hexTranslatableText);
+    ButtonWidget hexSubmitButton = new ButtonWidget(hexFieldX, hexFieldY + 20, hexFieldWidth, 20, applyHexTranslatableText, (buttonWidget) -> {
+        String hexCode = this.hexTextField.getText();
+        // Check if the string has alpha
+        if (hexCode.length() > 7) {
+            hexCode = hexCode.substring(2);
+        }
+        try {
+            this.color = Integer.parseInt(hexCode, 16);
+            this.updateColorsInGui(this.color);
+            this.sendColorToServer();
+        } catch (Exception e) {
+            Karam.LOGGER.log(Level.ERROR, e.toString());
+            return;
+        }
+    });
+
     private final DoubleOption doubleOptionRed = new DoubleOption("karam.menu.red", 0.0F, 255.0F, 1F, (gameOptions) -> {
         // Gets the red value from the full color
         return (double) this.red;
@@ -67,7 +93,12 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
 
     public void updateColor() {
         this.color = (0xFF << 24) | (red << 16) | (green << 8) | (blue);
+        this.hexTextField.setText(Integer.toHexString(this.color));
 
+        sendColorToServer();
+    }
+
+    public void sendColorToServer() {
         // Send the packet to the server
         PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
         passedData.writeInt(this.color);
@@ -100,6 +131,8 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
+        drawTextWithShadow(matrices, this.textRenderer, hexTranslatableText, hexFieldX, hexFieldY - 10, ColorHelper.white);
+        this.hexTextField.render(matrices, mouseX, mouseY, delta);
         super.render(matrices, mouseX, mouseY, delta);
 
         drawMouseoverTooltip(matrices, mouseX, mouseY);
@@ -112,6 +145,10 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         if (this.client == null)
             return;
 
+        this.addButton(hexSubmitButton);
+        hexTextField.setEditable(true);
+        this.children.add(hexTextField);
+
         // Set the initial values
         if (firstInitialize == true) {
             RgbifierScreenHandler rgbifierScreenHandler = (RgbifierScreenHandler) this.handler;
@@ -119,6 +156,7 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
             this.red = (this.color >> 16) & 0xFF;
             this.green = (this.color >> 8) & 0xFF;
             this.blue = (this.color >> 0) & 0xFF;
+            hexTextField.setText(Integer.toHexString(this.color));
         }
 
         // Center the title
@@ -140,7 +178,7 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         firstInitialize = false;
     }
 
-    public void updateSliders(int color) {
+    public void updateColorsInGui(int color) {
         if (this.client == null)
             return;
 
@@ -148,6 +186,8 @@ public class RgbifierScreen extends HandledScreen<ScreenHandler> {
         this.red = (this.color >> 16) & 0xFF;
         this.green = (this.color >> 8) & 0xFF;
         this.blue = (this.color >> 0) & 0xFF;
+
+        this.hexTextField.setText(Integer.toHexString(this.color));
 
         // Reinitialize the sliders to set them
         this.init(this.client, this.width, this.height);

@@ -19,5 +19,7 @@
   "block.karam.rgbifier": "Rgbifier",
   "block.karam.rgbifier.red": "Red: %d",
   "block.karam.rgbifier.green": "Green: %d",
-  "block.karam.rgbifier.blue": "Blue: %d"
+  "block.karam.rgbifier.blue": "Blue: %d",
+  "block.karam.rgbifier.hex": "Hex color code",
+  "block.karam.rgbifier.apply": "Apply"
 }

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
 public class ColorHelper {
+    public static int white = 16777215;
 
     /**
      * @param stack
@@ -14,7 +15,7 @@ public class ColorHelper {
     public static int getColorFromItemStack(ItemStack stack) {
         CompoundTag nbt = stack.getOrCreateTag();
 
-        int color = 16777215;
+        int color = white;
         if (nbt.contains("color", NbtType.INT)) { // nbt.contains(String, int) allows you to check for a subtag of a specific type, very cool
             color = nbt.getInt("color");
         } else if (nbt.contains("BlockEntityTag") && nbt.getCompound("BlockEntityTag").contains("color", NbtType.INT)) {

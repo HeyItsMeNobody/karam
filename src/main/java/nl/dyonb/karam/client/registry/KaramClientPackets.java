@@ -21,7 +21,7 @@ public class KaramClientPackets {
                         if (screen != null && screen instanceof RgbifierScreen) {
                             RgbifierScreen rgbifierScreen = (RgbifierScreen) screen;
 
-                            rgbifierScreen.updateSliders(color);
+                            rgbifierScreen.updateColorsInGui(color);
                         }
                     });
                 });
