@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
 import nl.dyonb.karam.util.ColorHelper;
 
-public class ElevatorBlockItem extends BlockItem {
-    public ElevatorBlockItem(Block block, Settings settings) {
+public class BaseColorBlockItem extends BlockItem {
+    public BaseColorBlockItem(Block block, Settings settings) {
         super(block, settings);
     }
 
