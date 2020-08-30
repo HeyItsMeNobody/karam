@@ -11,6 +11,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.data.client.model.BlockStateSupplier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterials;
@@ -33,18 +34,37 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import nl.dyonb.karam.common.block.entity.BaseColorBlockEntity;
 import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
 import nl.dyonb.karam.registry.KaramConfig;
+import nl.dyonb.karam.util.ColorHelper;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ElevatorBlock extends BaseColorBlock {
+public class ElevatorBlock extends Block implements BaseColorBlockInterface, BlockEntityProvider {
     public ElevatorBlock() {
         super(FabricBlockSettings.of(Material.WOOL).sounds(BlockSoundGroup.WOOL)
         .breakByTool(FabricToolTags.SHEARS, ToolMaterials.WOOD.getMiningLevel())
         .strength(1F, 1F));
     }
+
+    // Colors
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        BaseColorBlockInterface.onPlaced(world, pos, state, placer, itemStack);
+    }
+
+    @Override
+    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
+        BaseColorBlockInterface.afterBreak(world, player, pos, state, blockEntity, stack);
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return new ElevatorBlockEntity();
+    }
+    // End colors
 
     /**
      * @param direction
@@ -124,8 +144,4 @@ public class ElevatorBlock extends BaseColorBlock {
         return true;
     }
 
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ElevatorBlockEntity();
-    }
 }

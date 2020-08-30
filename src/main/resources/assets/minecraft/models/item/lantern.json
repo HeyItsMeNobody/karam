@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "karam:item/lantern_bezel",
+    "layer1": "karam:item/lantern_overlay"
+  }
+}

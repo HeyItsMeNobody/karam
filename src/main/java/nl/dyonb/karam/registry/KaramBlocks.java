@@ -8,12 +8,11 @@ import net.minecraft.util.registry.Registry;
 import nl.dyonb.karam.Karam;
 import nl.dyonb.karam.common.block.ElevatorBlock;
 import nl.dyonb.karam.common.block.RgbifierBlock;
-import nl.dyonb.karam.common.block.item.BaseColorBlockItem;
 
 public class KaramBlocks {
 
     private static ElevatorBlock elevatorBlock = new ElevatorBlock();
-    public static BaseColorBlockItem elevatorBlockItem = new BaseColorBlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
+    public static BlockItem elevatorBlockItem = new BlockItem(elevatorBlock, KaramItems.getBasicItemSettings());
     public static final Block ELEVATOR = register("elevator", elevatorBlock, elevatorBlockItem);
 
     public static final Block RGBIFIER = register("rgbifier", new RgbifierBlock(), KaramItems.getBasicItemSettings());
