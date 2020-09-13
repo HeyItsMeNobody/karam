@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import nl.dyonb.karam.client.registry.KaramClientPackets;
 import nl.dyonb.karam.client.registry.KaramColorProviders;
+import nl.dyonb.karam.client.registry.KaramRenderLayers;
 import nl.dyonb.karam.client.registry.KaramScreens;
 import nl.dyonb.karam.client.screen.DevNullScreen;
 import nl.dyonb.karam.registry.KaramScreenHandlers;
@@ -20,6 +21,8 @@ public class KaramClient implements ClientModInitializer {
         KaramScreens.initialize();
         // register a colorprovider
         KaramColorProviders.initialize();
+
+        KaramRenderLayers.initialize();
     }
 
 }

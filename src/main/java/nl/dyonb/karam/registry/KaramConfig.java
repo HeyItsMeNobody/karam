@@ -28,6 +28,10 @@ public class KaramConfig implements ConfigData {
     @Comment("Deactivate elevator when powered")
     public boolean deactivateElevatorOnRedstonePower = true;
 
+    // enderstopper
+    @Comment("Ender Stopper range")
+    public int enderStopperBlockRange = 10;
+
     public static void initialize() {
         AutoConfig.register(KaramConfig.class, JanksonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(KaramConfig.class).getConfig();

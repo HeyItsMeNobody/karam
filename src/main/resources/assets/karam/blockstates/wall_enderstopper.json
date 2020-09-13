@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "karam:block/wall_enderstopper"
+    },
+    "facing=north": {
+      "model": "karam:block/wall_enderstopper",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "karam:block/wall_enderstopper",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "karam:block/wall_enderstopper",
+      "y": 180
+    }
+  }
+}

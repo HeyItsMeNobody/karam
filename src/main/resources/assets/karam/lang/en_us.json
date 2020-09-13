@@ -5,6 +5,9 @@
 
   "block.karam.elevator": "Elevator",
 
+  "block.karam.enderstopper": "Ender Stopper",
+  "text.autoconfig.karam.option.enderStopperBlockRange": "The range the Ender Stopper takes effect in",
+
   "itemGroup.karam.main": "Karam main",
 
   "text.autoconfig.karam.title": "Karam",
