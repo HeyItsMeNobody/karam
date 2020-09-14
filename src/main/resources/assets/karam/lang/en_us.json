@@ -7,6 +7,7 @@
 
   "block.karam.enderstopper": "Ender Stopper",
   "text.autoconfig.karam.option.enderStopperBlockRange": "The range the Ender Stopper takes effect in",
+  "block.karam.enderstopper.show_border": "Show range border is set to %d",
 
   "itemGroup.karam.main": "Karam main",
 
