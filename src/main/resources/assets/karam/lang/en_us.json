@@ -8,11 +8,11 @@
   "block.karam.enderstopper": "Ender Stopper",
   "text.autoconfig.karam.option.enderStopperBlockRange": "The range the Ender Stopper takes effect in",
 
-  "itemGroup.karam.main": "Karam main",
+  "itemGroup.karam.main": "Karam",
 
   "text.autoconfig.karam.title": "Karam",
 
-  "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using dev_null",
+  "text.autoconfig.karam.option.destroyItemDevNull": "Destroy item when using /dev/null",
 
   "text.autoconfig.karam.option.deactivateElevatorOnRedstonePower": "Deactivate elevator when powered",
   "text.autoconfig.karam.option.ignoreObstructedElevator": "Ignore elevator obstructions",
