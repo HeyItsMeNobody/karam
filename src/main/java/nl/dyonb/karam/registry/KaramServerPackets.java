@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import nl.dyonb.karam.util.PacketReference;
-import org.graalvm.compiler.core.common.alloc.ComputeBlockOrder;
 
 public class KaramServerPackets {
 

@@ -1,6 +1,5 @@
 package nl.dyonb.karam.common.block;
 
-import jdk.internal.jline.internal.Nullable;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -8,25 +7,20 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.EnchantingTableBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.screen.*;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.Nameable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import nl.dyonb.karam.common.block.entity.RgbifierBlockEntity;
-import nl.dyonb.karam.common.item.inventory.DevNullInventory;
-import nl.dyonb.karam.common.screen.DevNullScreenHandler;
-import nl.dyonb.karam.common.screen.RgbifierScreenHandler;
+import org.jetbrains.annotations.Nullable;
 
 public class RgbifierBlock extends Block implements BlockEntityProvider {
     public RgbifierBlock() {
