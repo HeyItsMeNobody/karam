@@ -4,9 +4,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Items;
-import nl.dyonb.karam.common.block.BaseColorBlockInterface;
 import nl.dyonb.karam.common.block.entity.BaseColorBlockEntity;
-import nl.dyonb.karam.common.block.entity.ElevatorBlockEntity;
 import nl.dyonb.karam.registry.KaramBlocks;
 import nl.dyonb.karam.util.ColorHelper;
 

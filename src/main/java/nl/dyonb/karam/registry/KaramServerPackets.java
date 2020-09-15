@@ -19,7 +19,7 @@ public class KaramServerPackets {
                 if (currentScreenHandler.syncId == syncId) {
                     ItemStack itemStack = currentScreenHandler.getSlot(0).getStack();
 
-                    CompoundTag compoundTag = new CompoundTag();
+                    CompoundTag compoundTag = itemStack.getOrCreateTag();
                     compoundTag.putInt("color", color);
 
                     itemStack.setTag(compoundTag);
