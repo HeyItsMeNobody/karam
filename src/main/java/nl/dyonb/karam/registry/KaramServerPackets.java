@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
+import nl.dyonb.karam.util.ColorProviderReference;
 import nl.dyonb.karam.util.PacketReference;
 
 public class KaramServerPackets {
@@ -18,6 +19,10 @@ public class KaramServerPackets {
                 ScreenHandler currentScreenHandler = packetContext.getPlayer().currentScreenHandler;
                 if (currentScreenHandler.syncId == syncId) {
                     ItemStack itemStack = currentScreenHandler.getSlot(0).getStack();
+
+                    if (!ColorProviderReference.itemList().contains(itemStack.getItem())) {
+                        return;
+                    }
 
                     CompoundTag compoundTag = itemStack.getOrCreateTag();
                     compoundTag.putInt("color", color);
