@@ -21,7 +21,6 @@ public class Karam implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.log(Level.INFO, "Hello Karam world!");
-		System.out.println("Hello Karam world!");
 
 		KaramConfig.initialize();
 		KaramItemGroups.initialize();
