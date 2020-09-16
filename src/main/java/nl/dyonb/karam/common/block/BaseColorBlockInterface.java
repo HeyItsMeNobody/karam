@@ -1,5 +1,7 @@
 package nl.dyonb.karam.common.block;
 
+import nl.dyonb.karam.Karam;
+import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -59,7 +61,6 @@ public interface BaseColorBlockInterface {
     public static void dropNBTStacks(BlockState state, World world, BlockPos pos, @Nullable BlockEntity blockEntity, Entity entity, ItemStack stack) {
         if (world instanceof ServerWorld) {
             Block.getDroppedStacks(state, (ServerWorld) world, pos, blockEntity, entity, stack).forEach((itemStack) -> dropNBTStack(world, pos, blockEntity, itemStack));
-            //getDroppedStacks(state, (ServerWorld) world, pos, blockEntity, entity, stack).forEach((itemStack) -> dropNBTStack(world, pos, blockEntity, itemStack));
             state.onStacksDropped((ServerWorld) world, pos, stack);
         }
     }
@@ -74,18 +75,18 @@ public interface BaseColorBlockInterface {
      */
     // This allows for dropping custom nbt tagged items when the Elevator block is mined.
     public static void dropNBTStack(World world, BlockPos pos, BlockEntity blockEntity, ItemStack stack) {
-        if (!world.isClient && !stack.isEmpty() && blockEntity instanceof ElevatorBlockEntity) {
+        if (!world.isClient && !stack.isEmpty() && blockEntity instanceof BaseColorBlockEntity) {
             float generalOffset = 0.5F;
             double xOffset = (world.random.nextFloat() * generalOffset) + 0.25D;
             double yOffset = (world.random.nextFloat() * generalOffset) + 0.25D;
             double zOffset = (world.random.nextFloat() * generalOffset) + 0.25D;
 
             // Get the block entity
-            ElevatorBlockEntity elevatorBlockEntity = (ElevatorBlockEntity) blockEntity;
+            BaseColorBlockEntity baseColorBlockEntity = (BaseColorBlockEntity) blockEntity;
             ItemEntity itemEntity;
 
             // Put the color into the stack
-            stack.getTag().putInt("color", elevatorBlockEntity.getColor());
+            stack.getOrCreateTag().putInt("color", baseColorBlockEntity.getColor());
 
             itemEntity = new ItemEntity(world, pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset, stack);
             itemEntity.setToDefaultPickupDelay();

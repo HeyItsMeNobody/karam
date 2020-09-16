@@ -3,6 +3,7 @@ package nl.dyonb.karam;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import nl.dyonb.karam.registry.*;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +20,8 @@ public class Karam implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		//LOGGER.log(Level.DEBUG, "Hello Fabric world!");
+		LOGGER.log(Level.INFO, "Hello Karam world!");
+		System.out.println("Hello Karam world!");
 
 		KaramConfig.initialize();
 		KaramItemGroups.initialize();
