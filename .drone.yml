@@ -17,9 +17,11 @@ steps:
     username: Drone CI
     message: >
       {{#success build.status}}
-        Build {{build.number}} ({{build.commit}}) succeeded!
+        Build {{build.number}} succeeded!
+        {{build.link}}
       {{else}}
-        Build {{build.number}} ({{build.commit}}) failed.
+        Build {{build.number}} failed.
+        {{build.link}}
       {{/success}}
   
 - name: publish to github
