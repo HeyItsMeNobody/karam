@@ -14,13 +14,13 @@ public class ColorProviderReference {
 
     public static List<Block> blockList() {
         List<Block> newBlockList = new ArrayList<Block>();
-        newBlockList.addAll(Arrays.asList(KaramBlocks.ELEVATOR, Blocks.LANTERN));
+        newBlockList.addAll(Arrays.asList(KaramBlocks.ELEVATOR, Blocks.LANTERN, KaramBlocks.FLAT_COLOR));
         return newBlockList;
     }
 
     public static List<Item> itemList() {
         List<Item> newItemList = new ArrayList<Item>();
-        newItemList.addAll(Arrays.asList(KaramBlocks.elevatorBlockItem, Items.LANTERN));
+        newItemList.addAll(Arrays.asList(KaramBlocks.elevatorBlockItem, Items.LANTERN, KaramBlocks.FLAT_COLOR.asItem()));
         return newItemList;
     }
 

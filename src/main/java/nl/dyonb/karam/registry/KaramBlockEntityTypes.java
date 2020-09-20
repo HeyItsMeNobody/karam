@@ -18,6 +18,7 @@ public class KaramBlockEntityTypes {
     public static final BlockEntityType<ElevatorBlockEntity> ELEVATOR = register("elevator", ElevatorBlockEntity::new, KaramBlocks.ELEVATOR);
     public static final BlockEntityType<RgbifierBlockEntity> RGBIFIER = register("rgbifier", RgbifierBlockEntity::new, KaramBlocks.RGBIFIER);
     public static final BlockEntityType<LanternBlockEntity> LANTERN = register("lantern", LanternBlockEntity::new, Blocks.LANTERN);
+    public static final BlockEntityType<BaseColorBlockEntity> BASE_COLOR = register("base_color", BaseColorBlockEntity::new, KaramBlocks.FLAT_COLOR);
     public static final BlockEntityType<EnderStopperBlockEntity> ENDERSTOPPER = register("enderstopper", EnderStopperBlockEntity::new, KaramBlocks.ENDERSTOPPER, KaramBlocks.WALL_ENDERSTOPPER);
 
     public static void initialize() {

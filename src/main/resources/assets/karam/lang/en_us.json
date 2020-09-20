@@ -4,6 +4,7 @@
   "item.karam.dev_null.tooltip_2": "Currently filtering: %d",
 
   "block.karam.elevator": "Elevator",
+  "block.karam.flat_color": "Flat color block",
 
   "block.karam.enderstopper": "Ender Stopper",
   "text.autoconfig.karam.option.enderStopperBlockRange": "The range the Ender Stopper takes effect in",

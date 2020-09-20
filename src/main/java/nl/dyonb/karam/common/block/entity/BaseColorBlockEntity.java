@@ -14,6 +14,10 @@ public class BaseColorBlockEntity extends BlockEntity implements BlockEntityClie
         super(type);
     }
 
+    public BaseColorBlockEntity() {
+        super(KaramBlockEntityTypes.BASE_COLOR);
+    }
+
     public int getColor() { return color; }
 
     public void setColor(int colorToSet) {

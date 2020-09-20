@@ -1,17 +1,13 @@
 package nl.dyonb.karam.registry;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.EnderChestBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import nl.dyonb.karam.Karam;
-import nl.dyonb.karam.common.block.ElevatorBlock;
-import nl.dyonb.karam.common.block.EnderStopperBlock;
-import nl.dyonb.karam.common.block.RgbifierBlock;
-import nl.dyonb.karam.common.block.WallEnderStopperBlock;
+import nl.dyonb.karam.common.block.*;
 
 public class KaramBlocks {
 
@@ -20,6 +16,7 @@ public class KaramBlocks {
     public static final Block ELEVATOR = register("elevator", elevatorBlock, elevatorBlockItem);
 
     public static final Block RGBIFIER = register("rgbifier", new RgbifierBlock(), KaramItems.getBasicItemSettings());
+    public static final Block FLAT_COLOR = register("flat_color", new FlatColorBlock(), KaramItems.getBasicItemSettings());
 
     // Set-up for the Ender Stopper
     private static final EnderStopperBlock ENDERSTOPPER_BLOCK_STANDING = new EnderStopperBlock();
